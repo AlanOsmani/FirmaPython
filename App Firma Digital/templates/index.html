@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firma Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row pt-5 text-center">
+            <h1>Bienvenido a la Firma Digital</h1>
+            <p>En este sitio puede verificar un documento mediante su firma digital así como firmar sus docuemtos</p>
+        </div>
+        <div class="row pt-2">
+            <div class="col-6">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">Firma</div>
+                    <div class="card-body">
+                        <form action="/firmar" method="post" enctype="multipart/form-data">
+                            <div class="mb-4">
+                                <label for="formFile" class="form-label">Archivo TXT</label>
+                                <input class="form-control" type="file" name="plano">
+                            </div>
+                            <div class="mb-4">
+                                <label for="formFile" class="form-label">Llave privada en .PEM</label>
+                                <input class="form-control" type="file" name="privada">
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-secondary w-100">Firmar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">Verificar</div>
+                    <div class="card-body">
+                        <form action="/verificar" method="post" enctype="multipart/form-data">
+                            <div class="mb-4">
+                                <label for="formFile" class="form-label">Archivo TXT firmado</label>
+                                <input class="form-control" type="file" name="firmado">
+                            </div>
+                            <div class="mb-4">
+                                <label for="formFile" class="form-label">Llave publica en .PEM</label>
+                                <input class="form-control" type="file" name="publica">
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-secondary w-100">Verificar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-{{messages[0]}} alert-dismissible fade show" role="alert">
+                {{messages[1]}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+</body>
+
+</html>
